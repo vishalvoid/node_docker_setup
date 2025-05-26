@@ -1,6 +1,10 @@
+import { PrismaClient } from '@prisma/client';
 import Fastify from 'fastify';
 
+const db = new PrismaClient();
 const fastify = Fastify({ logger: true });
+
+db.post.findMany({ where: { published: true } });
 
 fastify.get('/', async () => {
   debugger;
