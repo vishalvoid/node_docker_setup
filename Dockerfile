@@ -6,7 +6,7 @@ COPY package.json ./
 COPY yarn.lock ./
 RUN yarn install
 
-COPY prisma/schema.prisma ./prisma
+COPY prisma/schema.prisma ./prisma/
 RUN npx prisma generate
 
 COPY . .

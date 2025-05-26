@@ -10,7 +10,13 @@
     "start": "node dist/index.js",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
-    "migrate": "NODE_OPTIONS=\"--loader ts-node/esm\" knex migrate:make"
+    "migrate": "NODE_OPTIONS=\"--loader ts-node/esm\" knex migrate:make",
+    "migrate:latest": "node --loader ts-node/esm migrate-helper.js",
+    "db:console": "docker-compose exec postgres psql -h localhost -U postgres -d webapp_dev",
+    "db:migrate": "yarn migrate:latest",
+    "docker:db:migrate": "docker-compose run web yarn migrate:latest",
+    "docker:db:migrate:undo": "docker-compose run web npx knex:migrate:down",
+    "rebuild:web": "docker-compose build web && docker-compose rm -rf web && docker-compose up -d"
   },
   "dependencies": {
     "@prisma/client": "6.8.2",
@@ -25,6 +31,7 @@
     "@types/node": "^22.15.21",
     "@typescript-eslint/eslint-plugin": "^8.32.1",
     "@typescript-eslint/parser": "^8.32.1",
+    "colorette": "2.0.20",
     "eslint": "^9.27.0",
     "prisma": "^6.8.2",
     "rimraf": "^6.0.1"
