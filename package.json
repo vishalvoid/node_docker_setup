@@ -15,13 +15,14 @@
     "db:console": "docker-compose exec postgres psql -h localhost -U postgres -d webapp_dev",
     "db:migrate": "yarn migrate:latest",
     "docker:db:migrate": "docker-compose run web yarn migrate:latest",
-    "docker:db:migrate:undo": "docker-compose run web npx knex:migrate:down",
-    "rebuild:web": "docker-compose build web && docker-compose rm -rf web && docker-compose up -d"
+    "docker:db:migrate:undo": "docker-compose run web npx knex migrate:down",
+    "rebuild:web": "docker-compose build web && docker-compose rm -f web && docker-compose up -d"
   },
   "dependencies": {
     "@prisma/client": "6.8.2",
     "fastify": "^5.3.3",
     "knex": "^3.1.0",
+    "nanoid": "^5.1.5",
     "pg": "^8.16.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
