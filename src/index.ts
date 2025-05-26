@@ -2,9 +2,16 @@ import { PrismaClient } from '@prisma/client';
 import Fastify from 'fastify';
 import { nanoid } from 'nanoid';
 
-const db = new PrismaClient();
-const fastify = Fastify({ logger: true });
+// Initialize Prisma client
+const db = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL,
+    },
+  },
+});
 
+const fastify = Fastify({ logger: true });
 
 const genId = () => nanoid(10);
 
