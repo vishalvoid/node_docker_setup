@@ -1,15 +1,23 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from './generated/prisma/index.js';
 import Fastify from 'fastify';
 import { nanoid } from 'nanoid';
 
-// Initialize Prisma client
-const db = new PrismaClient({
-  datasources: {
-    db: {
-      url: process.env.DATABASE_URL,
+// Initialize Prisma client with proper error handling
+let db: PrismaClient;
+
+try {
+  db = new PrismaClient({
+    datasources: {
+      db: {
+        url: process.env.DATABASE_URL,
+      },
     },
-  },
-});
+  });
+  console.log('Prisma client initialized successfully');
+} catch (e) {
+  console.error('Failed to create Prisma client:', e);
+  process.exit(1);
+}
 
 const fastify = Fastify({ logger: true });
 
