@@ -3,7 +3,8 @@ import Fastify from 'fastify';
 const fastify = Fastify({ logger: true });
 
 fastify.get('/', async () => {
-  return { hello: 'world' };
+  debugger;
+  return { hello: 'vishal kumar singh' };
 });
 
 const port = Number(process.env.PORT ?? 8080);
