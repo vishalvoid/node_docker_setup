@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid';
 const db = new PrismaClient();
 const fastify = Fastify({ logger: true });
 
-// Generate a unique ID for our database records
+
 const genId = () => nanoid(10);
 
 const seedData = async () => {
@@ -57,7 +57,6 @@ const seedData = async () => {
 };
 
 fastify.get('/', async () => {
-  // Get both published and unpublished posts for demonstration
   const publishedPosts = await db.post.findMany({ where: { published: true } });
   const unpublishedPosts = await db.post.findMany({
     where: { published: false },
@@ -71,7 +70,6 @@ fastify.get('/', async () => {
   };
 });
 
-// Add a route to get a single post by slug
 fastify.get('/posts/:slug', async (request, reply) => {
   const { slug } = request.params as { slug: string };
 
@@ -91,7 +89,6 @@ const port = Number(process.env.PORT ?? 8080);
 
 const start = async () => {
   try {
-    // Seed the database with initial data
     await seedData();
 
     await fastify.listen({ port, host: '0.0.0.0' });
