@@ -19,6 +19,19 @@ try {
   process.exit(1);
 }
 
+// Register process handlers for graceful shutdown
+process.on('SIGINT', async () => {
+  console.log('Received SIGINT, closing Prisma client and shutting down...');
+  await db.$disconnect();
+  process.exit(0);
+});
+
+process.on('SIGTERM', async () => {
+  console.log('Received SIGTERM, closing Prisma client and shutting down...');
+  await db.$disconnect();
+  process.exit(0);
+});
+
 const fastify = Fastify({ logger: true });
 
 const genId = () => nanoid(10);
@@ -98,6 +111,18 @@ fastify.get('/posts/:slug', async (request, reply) => {
   }
 
   return { post };
+});
+
+// Health check endpoint for monitoring
+fastify.get('/health', async () => {
+  try {
+    // Test database connection
+    await db.$queryRaw`SELECT 1`;
+    return { status: 'ok', database: 'connected' };
+  } catch (error) {
+    fastify.log.error('Database health check failed:', error);
+    return { status: 'error', database: 'disconnected' };
+  }
 });
 
 const port = Number(process.env.PORT ?? 8080);
