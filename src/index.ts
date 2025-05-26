@@ -4,7 +4,7 @@ const fastify = Fastify({ logger: true });
 
 fastify.get('/', async () => {
   debugger;
-  return { hello: 'vishal kumar singh' };
+  return { hello: 'postgres' };
 });
 
 const port = Number(process.env.PORT ?? 8080);
