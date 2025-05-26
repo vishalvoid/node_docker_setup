@@ -4,10 +4,10 @@ import Fastify from 'fastify';
 const db = new PrismaClient();
 const fastify = Fastify({ logger: true });
 
-db.post.findMany({ where: { published: true } });
-
 fastify.get('/', async () => {
+  db.post.findMany({ where: { published: true } });
   debugger;
+
   return { hello: 'postgres' };
 });
 
