@@ -1,10 +1,8 @@
-/**
- * Script to initialize the database schema and seed data
- */
+
 import { PrismaClient } from '@prisma/client';
 import { nanoid } from 'nanoid';
 
-// Generate a unique ID for our database records
+
 const genId = () => nanoid(10);
 
 const prisma = new PrismaClient();
@@ -13,7 +11,6 @@ async function main() {
   try {
     console.log('Starting database initialization...');
 
-    // Create the posts table if it doesn't exist yet
     console.log('Creating posts table...');
     await prisma.$executeRaw`
       CREATE TABLE IF NOT EXISTS "posts" (
@@ -30,13 +27,13 @@ async function main() {
       );
     `;
 
-    // Check if we need to seed data
+   
     const postCount = await prisma.post.count();
 
     if (postCount === 0) {
       console.log('Seeding database with initial data...');
 
-      // Add seed data
+
       await prisma.post.create({
         data: {
           id: genId(),

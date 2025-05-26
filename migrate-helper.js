@@ -1,5 +1,3 @@
-// This helper script runs Knex migrations using the programmatic API
-// which avoids issues with TypeScript files in ESM environments
 
 import knex from 'knex';
 import path from 'path';
@@ -8,10 +6,9 @@ import fs from 'fs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Import knexfile configuration
+
 async function getKnexConfig() {
   try {
-    // Use the configuration from knexfile.ts directly
     return {
       client: 'pg',
       connection: process.env.DATABASE_URL,

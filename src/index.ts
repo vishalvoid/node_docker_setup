@@ -2,7 +2,6 @@ import { PrismaClient } from './generated/prisma/index.js';
 import Fastify from 'fastify';
 import { nanoid } from 'nanoid';
 
-// Initialize Prisma client with proper error handling
 let db: PrismaClient;
 
 try {
@@ -19,7 +18,6 @@ try {
   process.exit(1);
 }
 
-// Register process handlers for graceful shutdown
 process.on('SIGINT', async () => {
   console.log('Received SIGINT, closing Prisma client and shutting down...');
   await db.$disconnect();
@@ -113,10 +111,8 @@ fastify.get('/posts/:slug', async (request, reply) => {
   return { post };
 });
 
-// Health check endpoint for monitoring
 fastify.get('/health', async () => {
   try {
-    // Test database connection
     await db.$queryRaw`SELECT 1`;
     return { status: 'ok', database: 'connected' };
   } catch (error) {

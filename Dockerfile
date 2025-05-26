@@ -13,7 +13,6 @@ COPY . .
 RUN yarn build
 EXPOSE 8080
 
-# Make entrypoint script executable
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
